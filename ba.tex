@@ -1,0 +1,146 @@
+\documentclass[bachelor,german]{mathe1thesis}
+
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\usepackage{wrapfig}
+\usepackage{listings}
+
+%\usepackage{lmodern} TODO: braucht man das?
+
+\usepackage{tabularx}
+\usepackage{ltablex}
+
+
+\usepackage{path}
+\usepackage{color}
+\usepackage{dsfont}
+
+\usepackage[disable,colorinlistoftodos]{luatodonotes}
+
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{nameref}
+\usepackage{algorithm2e} %for psuedo code
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% new operators
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\tf}{tf}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Titelseite -- hier Titel und Autorennamen eintragen
+\title{Eine duale Koordinatenabstiegsmethode als SVM-Verfahren zur algorithmischen Umsetzung der automatischen Textklassifizierung} % Geben Sie hier den Titel Ihrer Arbeit an.
+\subtitle{am Lehrstuhl für Mathematik VII}
+\author{Simon Puglisi} % Geben Sie Ihren Namen an.
+%\date{Eingereicht am \abgabedatum}
+\titlehead{Julius-Maximilians-Universität Würzburg\\
+Institut für Mathematik\\
+Lehrstuhl für Mathematik VII\\
+Numerische Mathematik und Optimierung}
+\supervisors{Prof.\ Dr.\ Christian Kanzow}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% Bitte nur ab hier Änderungen vornehmen %%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+    Die vorliegende Arbeit besteht aus fünf Teilen. Im ersten Kapitel befassen wir uns mit Klassifizierungsproblemen und Support-Vector-Machines (SVMs). Im zweiten Teil leiten wir mit einem anschaulichem topologischem Argument zwei hinreichende Konvergenzkriterien her. Im dritten Kapitel arbeiten wir eine Implementierung der L1/L2-Soft-SVM nach \cite{hcl-ddms-08} aus. Das nächste Kapitel stellt einen Kontext zur SVM und der Aufgabe der Textklassifizierung her. Zuletzt zeigen wir drei Experimente.
+
+%    \vspace{3em}
+%    \textbf{TODOs für die Titelseite:}
+%    \todo{Soll der Name des Lehrstuhls für englische Arbeiten übersetzt werden?}
+\end{abstract}
+
+\thesistableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\chapter{Automatische Klassifizierung und Support Vector Machines}
+\input{chap-ml.tex}
+ 
+\section{Support-Vector-Machines}
+\input{chap-svm.tex}
+
+\chapter{Abstiegsverfahren}
+\input{chap-decentmethods.tex}
+
+\chapter{Implementierung der L1/L2-Soft-SVM}
+\input{chap-impl.tex}
+
+\chapter{Textklassifizierung mit einer SVM}
+\input{chap-anwendung.tex}
+
+\chapter{Experimente}
+\input{chap-experimente.tex}
+  
+\chapter{Anhang: Theorie zu den restringierten Optimierungsaufgaben}
+\input{anhang-restr-opt-prob.tex}
+
+\chapter{Anhang: Zusatzmaterial für Experiment C}
+\label{chap:zusatz-exp-c}
+Im folgenden sind die Tabellen aus \emph{Experiment C} aufgeführt.
+\input{tables.tex}
+
+\chapter{Anhang: Programmcode für die Experimente}
+Folgender Programmcode wurde für die Experimente benutzt:
+\lstinputlisting[language=Python,caption=svm.py,label=lst:svm]{exp/svm.py}
+\lstinputlisting[language=Python,caption=exp-a.py,label=lst:exp-a]{exp/exp-a.py}
+\lstinputlisting[language=Python,caption=exp-b.py,label=lst:exp-b]{exp/exp-b.py}
+\lstinputlisting[language=Python,caption=exp-c.py,label=lst:exp-c]{exp/exp-c.py}
+\lstinputlisting[language=Python,caption=exputils.py,label=lst:exputils]{exp/exputils.py}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thesisbibliography
+\bibliography{mybib}
+
+
+\appendix
+
+
+%\clearpage
+%\pdfbookmark[0]{ToDo-Liste}{todos}
+%\listoftodos
+
+\end{document}

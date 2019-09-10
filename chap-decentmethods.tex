@@ -1,0 +1,82 @@
+Wir wollen in diesem Abschnitt ein hinreichendes Konvergenzkriterium herleiten. Hierfür führen folgende Notationen und Definitionen ein:
+\begin{itemize}
+\item Seien $X$, $\mathcal{Z} \subset X$ Mengen.
+\item Sei $\Phi : X \rightarrow \mathbb{R}$ so, dass das Problem 
+$
+	\min_{z \in \mathcal{Z}} \Phi(z)
+$
+lösbar ist. Weiter setzen wir $c^* := \min_{z \in \mathcal{Z}} \Phi(z)$, sowie $\mathcal{Z^*} := \Phi^{-1}(c^*)$.
+
+\item Sei $\mathcal{F} : Z \rightarrow Z$ so, dass $\Phi(\mathcal{F}(x)) < \Phi(x)$ für alle $x \in \mathcal{Z} \setminus \mathcal{Z^*}$ und $\Phi(\mathcal{F}(x)) = \Phi(x)$ für alle $x \in \mathcal{Z}^*$. Wir nennen $\mathcal{F}$ Abstiegsfunktion, oder einfach Abstieg für $\mathcal{Z}$ und bezeichnen $\mathcal{F}(z)$ Abstieg an $z$ auf $\Phi$ über $\mathcal{F}$. Weiter setzen wir $\mathcal{F}^i := 
+\underbrace{\mathcal{F} \circ ... \circ \mathcal{F}}_{i \; \text{mal}}$, sowie $\mathcal{F}^* \Phi(x) := \lim_{i \rightarrow \infty}\Phi^(\mathcal{F}^i(x))$.
+
+\item Sei $N(\varepsilon, c) := \Phi^{-1}([ \; c^* + \varepsilon,\ c \; ]) \; \cap \; \mathcal{Z}$ beziehungsweise
+$
+N(\varepsilon) := N(\varepsilon, \infty) := 
+\bigcup\limits_{c \geq c^*+\varepsilon} N(\varepsilon,c) $  
+die $c$-Sublevelmenge zum Niveau $\varepsilon$.
+
+\item Sei 
+$
+M(\varepsilon,c) := 
+\sup_{x \in N(\varepsilon,c)} \; \frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x)-c^*}
+$
+beziehungsweise $M(\varepsilon) := M(\varepsilon, \infty)$
+der minimale Relativabstieg auf $N(\varepsilon,c)$ über $\mathcal{F}$.
+
+\item Das Quadrupel $(X ,\ \mathcal{Z} ,\ \Phi ,\ \mathcal{F})$ bezeichnen wir als Abstiegsverfahren.
+
+
+\end{itemize}
+
+\begin{bemerkung}
+\begin{itemize}
+\item[(a)] Für alle $\varepsilon > 0, \ c > c^* + \varepsilon$ beziehungsweise $c = \infty$ ist $M(\varepsilon, c)$ wohldefiniert und es gilt $0 \leq M \leq 1$.
+\item[(b)] $\mathcal{F}^* \Phi$ ist wohldefiniert und auf $\mathcal{Z}$ gilt $c^* \leq \mathcal{F}^* \Phi \leq \Phi$.
+\end{itemize}	
+\end{bemerkung}
+
+\begin{satz}
+	Sei $(X ,\mathcal{Z}, \Phi , \mathcal{F})$ ein Abstiegsverfahren. Sei weiter $M(\varepsilon) < 1$ für beliebiges $\varepsilon > 0$. Dann ist $\mathcal{F}^* \Phi = c^*$.
+\end{satz}
+\begin{proof}
+	Sei $x \in \mathcal{Z}^*$. Nach Definition von  von $\mathcal{F}$ ist dann $\mathcal{F}(x) = x$. Also ist $\mathcal{F}^* \Phi(x) = x$. 
+	
+	Sei nun $\varepsilon > 0$ und $x \in \mathcal{Z} \setminus \mathcal{Z}^*$. Sei weiter $x \in N(\varepsilon)$.
+	Dann ist nach Definition von $M(\varepsilon)$
+	$$
+	\frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x) - c^*} \leq M(\varepsilon) \Leftrightarrow
+	\Phi(\mathcal{F}(x)) - c^* \leq M(\Phi(x) - c^*).
+	$$
+	Für $i \geq 1$ und $\mathcal{F}^i(x) \in N(\varepsilon)$ folgt induktiv, dass
+	$$
+	\Phi(\mathcal{F}^i(x)) - c^* \leq M^i (\Phi(x) - c^*).
+	$$
+	Da nach Voraussetzung $M(\varepsilon) < 1$, muss nach Definition von $N(\varepsilon)$ ein $j \in \mathbb{N}$ existieren, dass $\mathcal{F}^j(x) \in \mathcal{Z} \setminus N(\varepsilon)$.
+	
+	Sei nun $j \geq 0$ so, dass $\mathcal{F}^j(x) \in \mathcal{Z} \setminus N(\varepsilon)$. Dann ist nach Definition von $N(\varepsilon)$, $\mathcal{F}$ und Bemerkung 2.1 (b)  $c^* \leq \mathcal{F}^* \Phi(x) \leq \Phi(\mathcal{F}^j(x)) \le c^* + \varepsilon$. 
+	
+	Da $\varepsilon$ und $x$ beliebig waren, folgt schließlich $\mathcal{F}^*\Phi = c^*$.
+\end{proof}
+
+\begin{korollar}
+	\label{satz-abstiegsverfahren-konv}
+	Seien $(X, \mathcal{Z}, \Phi, \mathcal{F})$ ein Abstiegsverfahren, $(X,d)$ ein metrischer Raum, sowie $(Z,d)$ ein durch selbigem $d$ induzierter metrischer Raum. Seien $\Phi$ und $\Phi \circ \mathcal{F}$ stetig (bezüglich $d$). Weiter sei für jedes $\varepsilon > 0$ sowie jedes $z \in \mathcal{Z}$ die Menge $N(\varepsilon, \Phi(z))$ (bezüglich $d$) kompakt. Dann ist $\mathcal{F}^* \Phi = c^*$. Ist zusätzlich das Minimum eindeutig durch $z^*$ bestimmt und $Z$ abgeschlossen, so ist $\lim_{i \rightarrow \infty} \mathcal{F}^i(z) = z^*$ für alle $z \in \mathcal{Z}$.
+\end{korollar}
+\begin{proof}
+	Seien $\varepsilon > 0,\ z \in \mathcal{Z}$ beliebig. Die Funktion 
+	$$	
+	\frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x) - c^*}
+	$$ ist stetig und nimmt wegen der Kompaktheit von $N(\varepsilon, \Phi(z))$ nach dem Satz vom Minimum und Maximum (vgl. \cite{ae-ana1}) ihr Maximum an. Daher ist
+	$$
+	M(\varepsilon, \Phi(z)) := 
+	\sup_{z \in N(\varepsilon, \Phi(z))} \frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x) - c^*} = 
+	\max_{z \in N(\varepsilon, \Phi(z))} \frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x) - c^*}
+	< 1.
+	$$
+	Nach dem vorherigen Satz [angewendet auf 
+	$(X, \{ \Phi \leq \Phi(z) \}, \Phi, \mathcal{F})$] 
+	ist $\mathcal{F}^* \Phi = c^*$ auf $\{ \Phi \leq \Phi(z) \}$. Insbesondere ist $\Phi(z) = c^*$. 
+	
+	Sei nun das Minimum eindeutig durch $z^*$ bestimmt und $\mathcal{Z}$ abgeschlossen, $U_{z^*}$ eine beliebige offene Umgebung um $z^*$. Dann ist $N := N(\varepsilon, c) \setminus U_{z^*}$ abgeschlossen. Da $z^*$ das einzige Minimum ist, muss $\inf \Phi(N) = \min \Phi(N) > c^*$ gelten. Also ist $\mathcal{F}^i(z) \in U_{z^*}$ für fast alle $i \in \mathbb{N}$. Da $U_{z^*}$ eine beliebige Umgebung war, folgt schließlich $\lim_{i \rightarrow \infty} \mathcal{F}^i(z) = z^*$.
+\end{proof}

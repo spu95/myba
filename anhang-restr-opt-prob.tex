@@ -1,0 +1,117 @@
+Die nächsten Definitionen sind mit ein paar wenigen Anpassungen zur Vereinfachung dem Buch \cite{gk-tnro} entnommen.
+
+\begin{definition}[Primales Problem]
+	Seien $f \in C^1(\mathbb{R}^n)$ konvex und $g_i,h_j :\mathbb{R}^n \rightarrow \mathbb{R}$ affin linear für $i=1,...m$, $j=1,...p$. Wir nennen
+	\begin{equation}
+	\begin{aligned}
+	\min f(x) \qquad \text{u.d.N.} \qquad g_i(x) & \leq 0, i = 1,...,m \\
+	h_j(x) &=0, j = 1,...,p
+	\end{aligned}
+	\end{equation}
+	das primale Problem (P).
+\end{definition}
+
+\begin{definition}[Lagrange-Funktion]
+	Die durch
+	\begin{equation}
+	L(x,\lambda,\mu) := f(x)+\sum_{i=1}^m \lambda_i g_i(x) + \sum_{j=1}^p \mu_i h_j(x)
+	\end{equation}
+	definierte Abbildung $L: \mathbb{R}^n \times \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$ heißt Lagrangefunktion des restringierten Optimierungsproblems $(P)$.
+\end{definition}
+
+\begin{definition}[Karush-Kuhn-Tucker]\label{def:kkt}
+	Betrachte das Optimierungsproblem $(P)$.
+	\begin{itemize}
+		\item[(i)] Die Bedingungen
+		\begin{equation}
+		\begin{aligned}
+		\nabla_x L(x,\lambda,\mu) &= 0,\\
+		h(x) &= 0, \\
+		\lambda \geq 0, g(x) \leq 0, \lambda^t g(x) &= 0
+		\end{aligned}
+		\end{equation}
+		heißen Karush-Kuhn-Tucker-Bedingungen, oder kurz KKT-Bedingungen, des Optimierungsproblems $(P)$. Die Bedingung $\lambda^t g(x)=0$ wird auch komplementärer Schlupf genannt.
+		\item[(ii)] Jeder Vektor $(x^*,\lambda^*,\mu^*) \in \mathbb{R}^n \times \mathbb{R}^m \times \mathbb{R}^p$, der den KKT-Bedingungen genügt, heißt Karush-Kuhn-Tucker-Punkt (kurz KKT-Punkt) des Optimierungsproblems $(P)$.	
+	\end{itemize}
+\end{definition}
+
+\begin{definition}[Sattelpunkt]
+	Ein Vektor $(x^*,\lambda^*,\mu^*) \in \mathbb{R}^n \times \mathbb{R}^m \times \mathbb{R}^p$ mit $\lambda^* \geq 0$ heißt Sattelpunkt der Lagrangefunktion $L$, wenn die Ungleichungen
+	\begin{equation}
+	L(x^*,\lambda,\mu) \leq L(x^*,\lambda^*,\mu^*) \leq L(x,\lambda^*,\mu^*)
+	\end{equation}
+	für alle $(x,\lambda,\mu) \in \mathbb{R}^n \times \mathbb{R}^m \times \mathbb{R}^p$ gelten.
+\end{definition}
+
+\begin{definition}
+	Die Funktion 
+	$$q(\lambda,\mu) := \inf_{x \in \mathbb{R}^n} L(x,\lambda,\mu)$$
+	heißt die duale Funktion von $(P)$, das Optimierungsproblem $$
+	\max{q(\lambda,\mu)} \qquad \text{u.d.N.} \qquad \lambda \geq 0, \mu \in \mathbb{R}^p$$
+	das duale Problem oder Dualproblem $(D)$ zu $(P)$.
+\end{definition}
+
+\begin{satz}
+	\label{dual-kkt}
+	Betrachte das konvexe Optimierungsproblem $(P)$. Dann ist $x^* \in \mathbb{R}^n$ genau dann ein globales Minimum von $(P)$, wenn es Lagrange-Multiplikatoren $\lambda^* \in \mathbb{R}^m$ und $\mu^* \in \mathbb{R}^p$ gibt, sodass das Tripel $(x^*,\lambda^*,\mu^*)$ ein KKT-Punkt von $(P)$ ist.
+\end{satz}
+\begin{proof}
+	Siehe Korollar 2.47 in \cite{gk-tnro}.
+\end{proof}
+
+Die Beweisideen des nächsten Satz stammen aus \cite{g-af-09} (Satz 5.19).
+\begin{satz}
+	\label{dual-satz}
+	 Sei  $(x^*,\lambda^*,\mu^*) \in \mathbb{R}^n \times \mathbb{R}^m \times \mathbb{R}^p$. Dann sind äquivalent:
+	\begin{itemize}
+		\item[(i)] $(x^*, \lambda^*, \mu^*)$ ist ein KKT-Punkt von $(P)$
+		\item[(ii)] $(x^*, \lambda^*, \mu^*)$ ist ein Sattelpunkt der zu $(P)$ zugehörigen Lagrangefunktion
+		\item[(iii)] $x^*$ löst $(P)$ und $(\lambda^*, \mu^*)$ löst $(D)$
+	\end{itemize}
+\end{satz}
+\begin{proof}
+	Die Äquivalenz zwischen (i) und (ii) zeigt Korollar 2.50 (c) aus \cite{gk-tnro}. Wir zeigen die Äquivalenz von (ii) und (iii). 
+	Seien 
+	$$ \inf{(P)} := \inf{\{ f(x) \, | \, x \in \mathbb{R}^n ,\ g(x) \leq 0 ,\ h(x) = 0 \}},$$
+	$$
+	\sup{(D)} := sup{\{ q(\lambda, \mu) \lambda \geq 0 ,\ \mu \in \mathbb{R}^n \}}
+	$$
+	die Optimalwerte des primalen und des dualen Problems. Für $(P)$ und $(D)$ gilt nach \cite{gk-tnro} starke Dualität gilt, anders formuliert ist also $\sup{(D)} = \inf{(P)}$. \\
+	
+	$(iii) \Rightarrow (ii)$:
+	Seien also $(x^*,\lambda^*,\mu^*)$ Lösungen für $(P)$ bzw. $(D)$. Dann gilt
+	$$
+	\sup(D) = \sup_{\lambda \geq 0, \mu} \inf_{x \in \mathbb{R}^n}{L(x,\lambda, \mu)} = \inf_{x \in \mathbb{R}^n} L(x, \lambda^*, \mu^*) \leq  L(x^*, \lambda^*,\mu^*) \leq \sup_{\lambda \geq 0, \mu} L(x^*, \lambda, \mu) = \inf{(P)}.
+	$$
+	Aus der starken Dualität folgt nun für alle Ungleichungen Gleichheit. Damit ist $$
+	\sup_{\lambda \geq 0, \mu} L(x^*, \lambda, \mu) = L(x^*, \lambda^*,\mu^*) = \inf_{x \in \mathbb{R}^n} L(x, \lambda^*, \mu^*).$$
+	Also ist $(x^*,\lambda^*, \mu^*)$ ein Sattelpunkt.
+	
+	$(iii) \Leftarrow (ii)$: Es sei nun $(x^*, \lambda^*, \mu^*)$ sein Sattelpunkt. Es gilt komplementärer Schlupf. Weiter ist 
+	$$
+	L(x^*,\lambda^*,\mu^*) = \inf_{x\in\mathbb{R}^n}L(x,\lambda^*,\mu^*) \leq  \sup_{\lambda \geq 0, \mu}\inf_{x\in\mathbb{R}^n}L(x,\lambda,\mu) = 
+	\sup{(D)} = \inf{(P)}.
+	$$
+	Damit ist $L(x^*,\lambda^*,\mu^*) = f(x^*) \leq \inf{(P)}$. Also löst $x^*$ das primale Problem. Weiter ist 
+	$$
+	q(\lambda^*,\mu^*)=\inf_{x \in \mathbb{R}^n}{L(x,\lambda^*,\mu^*)} = L(x^*,\lambda^*,\mu^*) = f(x^*) = \inf{(P)} = \sup{(D)}.
+	$$
+	Damit löst $(\lambda^*, \mu^*)$ das duale Problem.	
+\end{proof}
+
+\begin{satz}
+\label{satz-strict-konvex-innprdt}
+	Die Funktion $\langle x, x \rangle = ||x||^2$ ist strikt konvex.
+\end{satz}
+\begin{proof}
+	Für $||x||^2 = \langle x ,\ x \rangle$ gilt $\langle \nabla \langle x,x \rangle, h \rangle = 2 \langle x, h \rangle$. Weiter ist mit $x ,\ y \in \mathbb{R}^n$ und $x \neq y$
+	$$
+	\begin{aligned}
+	\langle x, x \rangle - \langle y, y \rangle > 2 \langle y , x - y \rangle \Leftrightarrow
+	\langle x, x \rangle + \langle y, y \rangle > 2 \langle y , x \rangle 
+	\Leftrightarrow
+	\langle x-y, x-y \rangle > 0 \Leftrightarrow  x \neq y.
+	\end{aligned}
+	$$
+	Damit ist nach Satz 2.16 \cite{gk-tnro} $\langle \, . \, , \, . \, \rangle$ strikt konvex.
+\end{proof}

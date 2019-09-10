@@ -1,0 +1,57 @@
+Die vorgestellten Konzepte wollen wir nun für die Textklassifizierung anwenden. 
+Die Textklassifizierung ist eine Teildisziplin der \emph{Information Retrieval} (IR). Ihre Aufgabe besteht darin Dokumente in eine zuvor definierte Taxonomie, also eine Menge von Kategorien, einzuordnen. Dies kann von Hand, automatisiert oder in Kombination geschehen. Die automatische Klassifizierung bietet den Vorteil große Mengen an Dokumenten mit wenig Aufwand zu verarbeiten. Das Einsatzgebiet ist groß. Neben dem klassischem Spam-Filter für Mail-Server und Internetblogs findet die Automatische Klassifizierung auch in der Industrie Anwendung. Aber auch in sozialen Medien wie Facebook oder Twitter sind solche Algorithmen sicherlich unabdingbar, um beispielsweise unerwünschten Inhalt effektiv zu filtern. 
+
+Für einen automatisierten Lösungsansatz ist ein gewisser Abstraktionsgrad hilfreich. Das \emph{Vektorraummodell} (VRM) liefert nach \cite{j-tcsvmmf} einen vielversprechenden Ansatz.
+
+\section{Modellierung} 
+Nach \cite{f-ir} ist das Vektorraummodell wie folgt definiert:
+\begin{definition}[Vektorraummodell]
+	\label{def-vrm}
+	Sei $T = \{t_1,...,t_n\}$ eine endliche Menge von Termen und $D=\{ d_1,...,d_l \}$ eine Menge von Dokumenten. Für jedes Dokument $d_i \in D$ sei zu jedem Term $t_k \in T$ ein Gewicht $v_{i,k} \in \mathbb{R}$ gegeben. Die Gewichte des Dokuments $d_i$ lassen sich zu einem Vektor $v_i = (v_{i,1},...,v_{i,n})$ zusammenfassen. Dieser Vektor beschreibt das Dokument im Vektorraummodell: Er ist eine Repräsentation und wird Dokumentvektor genannt.
+\end{definition}
+
+Für die Gewichtungsmethode gibt es verschiedene Möglichkeiten. Einige werden in \cite{f-ir} vorgestellt. Wir werden die \emph{Termhäufigkeit}  (term frequency) beziehungsweise TF verwenden:
+
+\begin{definition}
+	\label{def-tf}
+	Die Worthäufigkeit $\tf(t,d):T \times D \rightarrow \mathbb{N}_0$ wird durch die Häufigkeit des Vorkommens des Terms $t_k$ im Dokument $d_i$ definiert.
+\end{definition}
+
+\begin{beispiel}
+	Wir betrachten das Dokumenten-Tripel $(D,T,v)$ mit $D=\{d_1,d_2\},\ T = \{t_1,..._,t_{12}\},\ v=(v_1,v_2)$.
+	Das Vokabular sei mit
+	$$ \begin{aligned}
+	& t_1:"'\text{heute}"',\ t_2:"'\text{scheint}"',\ t_3:"'\text{die}"',\ t_4:"'\text{sonne}"',\ t_5: "'\text{gestern}"',\ t_6:"'\text{hat}"', \\
+	& t_7:"'\text{es}"',\ t_8:"'\text{geregnet}"', t_9:"'\text{war}"',\ t_{10}:"'\text{nicht}"',\ t_{11}:"'\text{zu}"',\ t_{12}:"'\text{sehen}"'
+	\end{aligned}$$
+	festgelegt, die Dokumente mit
+	$$
+	\begin{aligned}
+	d_1&:\text{Heute scheint die Sonne. Gestern hat es geregnet. Die Sonne war nicht zu sehen}, \\
+	d_2&:\text{Heute scheint nicht die Sonne. Gestern war die Sonne zu sehen.}
+	\end{aligned}
+	$$
+	Die Dokumentenvektoren ergeben sich nach Definition \ref{def-vrm} und \ref{def-tf} damit zu 
+	$$
+	\begin{aligned}
+	v_1 &=(\tf(t_1,d_1),\tf(t_2,d_1), ...,\tf(t_{12},d_1)) = (1,1,2,2,1,1,1,1,1,1)   \\
+	v_2 &=(\tf(t_1,d_2),\tf(t_2,d_2), ...,\tf(t_{12},d_2)) = (1,1,2,2,1,0,0,0,1,1).
+	\end{aligned}
+	$$
+\end{beispiel}
+
+\begin{bemerkung}[Dimensionsreduktion]
+	Zwei Techniken zur Dimensionsreduktion sind:
+	\begin{itemize}
+		\item[(a)] Reduzierung der Wörter auf ihren Wortstamm (stemming).
+		
+		\item[(b)] Filtern häufig auftretender Wörter mit wenig Informationsgehalt wie "'der"', "'die"', "'das"', "'ist"', "'war"' (stop words).
+	\end{itemize}
+\end{bemerkung}
+
+Eine Reduzierung des VRM soll der Effizienzsteigerung der Klassifizierung dienen. Laut \cite{j-tcsvmmf} kann sich jedoch ein zu starkes Reduktionsverfahren negativ auf die Genauigkeit der Textklassifizierung auswirken. 
+
+\section{Text-Klassifizierung und SVMs}\label{sec:anwendung-txt-klas-svm}
+Mit Hilfe der Überführung der Textdokumente in das VRM, sowie den Algorithmen \ref{alg:softsvm} und \ref{alg:mkk-softsvm} können wir die automatische Textklassifizierung algorithmisch umsetzen. Im nächsten Absatz werden wir diesen Ansatz diskutieren: 
+
+Bei der Textklassifizierung sind Vektorraummodelle mit Dimensionen der Größenordnung zehntausend bis hunderttausend und höher nicht ungewöhnlich. Dem Gegenüber stehen oft wenige hundert bis ein paar tausend Trainingsdaten. Solche Probleme sind laut \cite{j-tcsvmmf} in vielen Fällen linear separierbar. SVMs zeigen nach \cite{j-tcsvmmf} für solche Klassifizierungsprobleme gute Ergebnisse. Es ist plausibel für die Textklassifizierung das duale Soft-SVM-Problem heranzuziehen, da dieses mit der Trainingsanzahl, und nicht etwa der Dimensionsgröße des Featureraums, skaliert. Weiter bemerken wir, dass bei den beiden vorgestellten Soft-SVM-Varianten der zulässige Bereich nur durch Box-Bedingungen restringiert wird. Auch wenn im Allgemeinen nicht mehr die optimale Hyperebene im Sinne des Hard-SVM gefunden wird, erlaubt uns dieser Umstand eine Lösung im Vergleich zum nicht homogenen Fall oft schneller zu finden. Für die Klassifizierung großer Text-Korpora erweisen sich duale Koordinatenabstiegsmethoden, die die Soft-SVM lösen, klassischer SVM-Verfahren bezüglich der Rechenzeit bei akzeptabler Klassifizierung deutlich überlegen, siehe hierzu beispielsweise \cite{hcl-pgsvc-16} und Experiment C im Unterkapitel \ref{sec:exp-c}.

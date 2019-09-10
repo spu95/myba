@@ -1,0 +1,135 @@
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l | r | r | r | r|}
+\hline
+Multinomial Naive Bayes        & precision  &  recall &  f1-score &   support \\
+\hline
+             alt.atheism       & 0.79      & 0.73      & 0.76      & 319 \\
+           comp.graphics       & 0.68      & 0.73      & 0.70      & 389 \\
+ comp.os.ms-windows.misc       & 0.33      & 0.01      & 0.01      & 394 \\
+comp.sys.ibm.pc.hardware       & 0.56      & 0.76      & 0.65      & 392 \\
+   comp.sys.mac.hardware       & 0.85      & 0.71      & 0.77      & 385 \\
+          comp.windows.x       & 0.63      & 0.85      & 0.72      & 395 \\
+            misc.forsale       & 0.95      & 0.61      & 0.74      & 390 \\
+               rec.autos       & 0.86      & 0.90      & 0.88      & 396 \\
+         rec.motorcycles       & 0.97      & 0.90      & 0.93      & 398 \\
+      rec.sport.baseball       & 0.97      & 0.85      & 0.90      & 397 \\
+        rec.sport.hockey       & 0.93      & 0.96      & 0.95      & 399 \\
+               sci.crypt       & 0.63      & 0.95      & 0.76      & 396 \\
+         sci.electronics       & 0.79      & 0.63      & 0.70      & 393 \\
+                 sci.med       & 0.86      & 0.82      & 0.84      & 396 \\
+               sci.space       & 0.82      & 0.88      & 0.85      & 394 \\
+  soc.religion.christian       & 0.68      & 0.96      & 0.80      & 398 \\
+      talk.politics.guns       & 0.68      & 0.91      & 0.78      & 364 \\
+   talk.politics.mideast       & 0.81      & 0.95      & 0.87      & 376 \\
+      talk.politics.misc       & 0.58      & 0.64      & 0.60      & 310 \\
+      talk.religion.misc       & 0.92      & 0.32      & 0.47      & 251 \\
+\hline
+               avg / total     & 0.76      & 0.76      & 0.74      & 7532 \\
+\hline			 
+\end{tabular}
+\caption{Klassifizierungsgenauigkeit für das Multinomial-Naive-Bayes-Verfahren.}
+\label{tab:MNB}
+\end{table}
+			 
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l | r | r | r | r|}
+\hline
+L2-Soft-SVM                    & precision  &  recall &  f1-score &   support \\
+\hline
+             alt.atheism       & 0.75      & 0.72      & 0.73      & 319  \\
+           comp.graphics       & 0.67      & 0.72      & 0.69      & 389 \\
+ comp.os.ms-windows.misc       & 0.71      & 0.65      & 0.68      & 394 \\
+comp.sys.ibm.pc.hardware       & 0.63      & 0.67      & 0.65      & 392 \\
+   comp.sys.mac.hardware       & 0.73      & 0.78      & 0.76      & 385 \\
+          comp.windows.x       & 0.81      & 0.69      & 0.74      & 395 \\
+            misc.forsale       & 0.80      & 0.88      & 0.84      & 390 \\
+               rec.autos       & 0.84      & 0.83      & 0.84      & 396 \\
+         rec.motorcycles       & 0.89      & 0.93      & 0.91      & 398 \\
+      rec.sport.baseball       & 0.86      & 0.88      & 0.87      & 397 \\
+        rec.sport.hockey       & 0.93      & 0.93      & 0.93      & 399 \\
+               sci.crypt       & 0.89      & 0.90      & 0.89      & 396 \\
+         sci.electronics       & 0.68      & 0.68      & 0.68      & 393 \\
+                 sci.med       & 0.82      & 0.77      & 0.80      & 396 \\
+               sci.space       & 0.88      & 0.88      & 0.88      & 394 \\
+  soc.religion.christian       & 0.82      & 0.91      & 0.86      & 398 \\
+      talk.politics.guns       & 0.72      & 0.84      & 0.77      & 364 \\
+   talk.politics.mideast       & 0.92      & 0.79      & 0.85      & 376 \\
+      talk.politics.misc       & 0.69      & 0.51      & 0.59      & 310 \\
+      talk.religion.misc       & 0.61      & 0.62      & 0.62      & 251 \\
+\hline
+             avg / total       & 0.79      & 0.79      & 0.78      & 7532 \\
+\hline			 
+\end{tabular}
+\caption{Klassifizierungsgenauigkeit für die L2-Soft-SVM-Machine.}
+\label{tab:L2SoftSVM}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l | r | r | r | r|}
+\hline
+L1-Soft-SVM                    & precision  &  recall &  f1-score &   support \\
+\hline
+             alt.atheism       & 0.75      & 0.72      & 0.74      & 319  \\
+           comp.graphics       & 0.68      & 0.71      & 0.69      & 389 \\
+ comp.os.ms-windows.misc       & 0.69      & 0.66      & 0.68      & 394 \\
+comp.sys.ibm.pc.hardware       & 0.62      & 0.66      & 0.64      & 392 \\
+   comp.sys.mac.hardware       & 0.73      & 0.78      & 0.75      & 385 \\
+          comp.windows.x       & 0.80      & 0.68      & 0.74      & 395 \\
+            misc.forsale       & 0.79      & 0.86      & 0.83      & 390 \\
+               rec.autos       & 0.83      & 0.83      & 0.83      & 396 \\
+         rec.motorcycles       & 0.90      & 0.93      & 0.91      & 398 \\
+      rec.sport.baseball       & 0.84      & 0.88      & 0.86      & 397 \\
+        rec.sport.hockey       & 0.93      & 0.93      & 0.93      & 399 \\
+               sci.crypt       & 0.89      & 0.90      & 0.89      & 396 \\
+         sci.electronics       & 0.67      & 0.68      & 0.68      & 393 \\
+                 sci.med       & 0.82      & 0.77      & 0.80      & 396 \\
+               sci.space       & 0.89      & 0.88      & 0.89      & 394 \\
+  soc.religion.christian       & 0.82      & 0.91      & 0.86      & 398 \\
+      talk.politics.guns       & 0.72      & 0.83      & 0.77      & 364 \\
+   talk.politics.mideast       & 0.92      & 0.79      & 0.85      & 376 \\
+      talk.politics.misc       & 0.70      & 0.51      & 0.59      & 310 \\
+      talk.religion.misc       & 0.61      & 0.62      & 0.61      & 251 \\
+\hline
+             avg / total      & 0.78      &  0.78     & 0.78      & 7532\\
+\hline			 
+\end{tabular}
+\caption{Klassifizierungsgenauigkeit für die L1-Soft-SVM-Machine.}
+\label{tab:L1SoftSVM}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l | r | r | r | r|}
+\hline
+LibSVM                         & precision  &  recall &  f1-score &   support \\
+\hline
+             alt.atheism       & 0.67      & 0.68      & 0.68      & 319  \\
+           comp.graphics       & 0.60      & 0.72      & 0.65      & 389 \\
+ comp.os.ms-windows.misc       & 0.68      & 0.63      & 0.66      & 394 \\
+comp.sys.ibm.pc.hardware       & 0.61      & 0.65      & 0.63      & 392 \\
+   comp.sys.mac.hardware       & 0.69      & 0.71      & 0.70      & 385 \\
+          comp.windows.x       & 0.80      & 0.66      & 0.72      & 395 \\
+            misc.forsale       & 0.80      & 0.87      & 0.83      & 390 \\
+               rec.autos       & 0.74      & 0.79      & 0.76      & 396 \\
+         rec.motorcycles       & 0.84      & 0.85      & 0.85      & 398 \\
+      rec.sport.baseball       & 0.77      & 0.76      & 0.76      & 397 \\
+        rec.sport.hockey       & 0.90      & 0.85      & 0.88      & 399 \\
+               sci.crypt       & 0.83      & 0.84      & 0.84      & 396 \\
+         sci.electronics       & 0.65      & 0.66      & 0.65      & 393 \\
+                 sci.med       & 0.67      & 0.63      & 0.65      & 396 \\
+               sci.space       & 0.89      & 0.81      & 0.85      & 394 \\
+  soc.religion.christian       & 0.82      & 0.89      & 0.85      & 398 \\
+      talk.politics.guns       & 0.65      & 0.79      & 0.72      & 364 \\
+   talk.politics.mideast       & 0.91      & 0.72      & 0.80      & 376 \\
+      talk.politics.misc       & 0.59      & 0.46      & 0.52      & 310 \\
+      talk.religion.misc       & 0.53      & 0.57      & 0.55      & 251 \\
+\hline
+              avg / total      & 0.74      & 0.73      & 0.73      &7532 \\
+\hline			 
+\end{tabular}
+\caption{Klassifizierungsgenauigkeit für die LibSVM (Hard-SVM mit Schlupfvariablen).}
+\label{tab:LibSVM}
+\end{table}

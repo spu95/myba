@@ -1,0 +1,243 @@
+Wir werden in diesem Unterkapitel die Koordinatenabstiegsmethode für die duale $L_1/L_2$-Soft-SVM formulieren und ihre Konvergenz theoretisch begründen. Zunächst wollen wir die in Satz \ref{satz-svm-dual-probleme} formulierten Probleme 
+$$\max_{C \geq \alpha \geq 0} q(\alpha) \qquad
+	\text{beziehungsweise} \qquad 
+	\max_{\alpha \geq 0} q(\alpha) - \frac{1}{4C}\sum_{i=1}^{l}\alpha_i^2
+$$
+in eine für uns geeignetere Form bringen. Zunächst bemerken wir, dass 
+$$
+\begin{aligned}
+	q(\alpha) &= \sum_{i=1}^{l} \alpha_i - \frac{1}{2} \left< \sum_{i=1}^{l} \alpha_i y^i x^i ,\sum_{j=1}^{l} \alpha_j y^j x^j \right> =  
+	\sum_{i=1}^{l} \alpha_i - \frac{1}{2} \sum_{i,j=1}^{l} \alpha_i \alpha_j y^i y^j \left< x^i, x^j \right> = \\
+	&= \sum_{i=1}^{l} \alpha_i - \frac{1}{2} \alpha^t Q \alpha
+\end{aligned}
+$$
+mit der positiv semidefiniten Matrix $Q_{ij} = y^i y^j \left<x^i, x^j \right> \in \mathbb{R}^{l \times l}$ gilt. \\
+
+
+Um Notationen zu sparen werden wir $U \in \mathbb{R}$ und die Diagonalmatrix $D \in \mathbb{R}^{l \times l}$ für die $L_1$- respektive $L_2$-Soft-SVM fallweise definieren: Im Falle des L1-Soft-SVM setzen wir $U=C$ und $D_{ii} = 0$ für $i=1,...,l$. Im Falle des L2-Soft-SVM setzen wir  $U=\infty$ und $D_{ii} = 1/(2C)$ für alle $i=1,...,l$. Die Aussagen, die mit $U$ und $D$ formuliert werden (oder aus solchen Aussagen folgen), sind dann jeweils im Kontext des L1- respektive L2-SVM-Soft-SVMs zweimal zu lesen. In dieser Notation lässt sich das zum dualen L1- und L2-Soft-SVM-Problem äquivalente Problem dann zu
+\begin{equation}\label{equ:op-impl}
+	\min_{U \geq \alpha \geq 0} f(\alpha) := \min_{U \geq \alpha \geq 0} \frac{1}{2}\alpha^t \bar{Q} \alpha - \sum_{i=1}^{l} \alpha_i
+\end{equation}
+formulieren, wobei wir $\bar{Q} = Q+D$ setzen. \\
+
+Wir wollen nun Problem (\ref{equ:op-impl}) mit der \emph{Koordinatenabstiegsmethode} lösen. Hierfür minimieren wir  für einen beliebigen zulässigen Startwert $\alpha$ die Zielfunktion $f$ \emph{komponentenweise} solange, bis $\alpha$ optimal ist. Dies führt uns auf das zu lösende Subproblem 
+\begin{equation}\label{equ:dec-schritt}
+ 	\argmin_{d \in \mathbb{R}}f(\alpha+de_i) \qquad \text{u.d.N.} \qquad 0 \leq \alpha_i+te_i \leq U_p.
+\end{equation}
+für $i=1,...,l$. Die Zielfunktion kann zu  
+$$
+f(\alpha+de_i) =  \frac{1}{2}\bar{Q}_{ii}d^2 + r d + s
+$$
+für eindeutig bestimmte $r,s \in \mathbb{R}$ umformuliert werden. Bei (\ref{equ:op-impl}) handelt es sich also um ein restringiertes quadratisches Optimierungsproblem im $\mathbb{R}^1$. Wegen $Q_{ii} = y^i y^i \left<x^i, x^i \right> = \left< x^i, x^i \right>$ und der Voraussetzung $x^i \neq 0$ ist $\bar{Q}_{ii} > 0$. Damit ist das Problem (\ref{equ:op-impl}) sowohl für den L1- als auch den L2-Soft-SVM eindeutig lösbar. Weiter ist es ersichtlich, dass wir die globale Lösung ohne Nebenbedingungen orthogonal auf $[0, U]$ projizieren können, um das eindeutige Minimum im restringierten Fall zu bestimmen. Wir wollen deshalb zunächst die Lösung im unrestringierten Fall ermitteln. Dies führt uns auf die Gleichung
+$$
+\frac{d}{dt}f(\alpha+te_i) = 0 \Leftrightarrow \nabla f(\alpha+t e_i)^t e_i = [\bar{Q}(\alpha + te_i)]_i - 1 = \nabla f(\alpha)^t e_i + \hat{Q}_{ii}t \stackrel{!}{=}0.
+$$
+Damit ergibt sich der Koordinatenabstieg in der $i$-ten Komponente zu 
+\begin{equation}
+\label{equ:cd-step}
+k^i(\alpha) :=
+\min \left( \max \left( \alpha_i-\frac{\nabla_i f(\alpha)}{\bar{Q}_{ii}},\ 0 \right),\ U \right).
+\end{equation}
+Weiter definieren wir $\mathcal{K}^i := (\mathcal{K}^i_1,...,\mathcal{K}^i_l)$ durch
+\begin{equation} 
+\mathcal{K}^i_j(\alpha) := \left\{ \begin{array}{ll}
+	\alpha_i 	&,\ i \neq j \\
+	k^i (\alpha) &,\ \text{sonst}
+\end{array} \right.
+\end{equation}
+sowie $\mathcal{F}' = \mathcal{K}^l \circ \cdots \circ \mathcal{K}^1$. In Algorithmus \ref{alg:cod-alg} wird die Koordinatenabstiegsmethode formal formuliert.
+
+\begin{algorithm}
+\KwIn{$\alpha$}
+\KwOut{$\alpha$}
+\While{$\alpha$ nicht optimal}{
+	$\alpha \gets \mathcal{F}'(\alpha)$	
+}
+\caption{Koordinatenabstiegsmethode}
+\label{alg:cod-alg}
+\end{algorithm}
+
+Im nächsten Unterkapitel werden wir ein Optimalitätskriterium für Algorithmus \ref{alg:cod-alg} herleiten. Weiter klären wir, dass wir aus dem \emph{dualen} $\alpha$ ein \emph{primales} $w$ erhalten können, dass bei Anwendung des Algorithmus gegen die primale (Teil-)Lösung vom L1/L2-Soft-SVM konvergiert.
+
+\section{Konvergenz und Abbruchkriterium}
+
+\begin{bemerkung}\label{bem:impl-abstieg}
+	Setzen wir $G = [0,U]^l$, so ist $\mathcal{F}':G \rightarrow G$ offenbar eine stetige Selbstabbildung, und es gilt $f(\mathcal{F}'(\alpha)) \leq f(\alpha)$.
+\end{bemerkung}
+
+\begin{lemma}\label{lem:impl-abstieg}
+	Sei $\alpha \in \mathbb{R}^l$ zulässig für das Optimierungsproblem (\ref{equ:op-impl}). Gilt $\mathcal{F}'(\alpha) = \alpha$, so ist $\alpha$ eine Lösung für (\ref{equ:op-impl}).
+\end{lemma}
+\begin{proof}
+Es seien die Voraussetzungen für den Satz erfüllt. Sei also $\alpha \in \mathbb{R}^l$ und es gelte $\mathcal{F}'(\alpha) = \alpha$.  Dann ist 
+$$
+\begin{aligned}
+\mathcal{F}'(\alpha) = \alpha & \Leftrightarrow (k^1(\alpha),...,k^l(\alpha)) = \alpha \\
+& \Leftrightarrow \alpha_i = k^i(\alpha) \qquad \text{für alle} \ i = 1,...,l.
+\end{aligned}
+$$ 
+Hieraus folgt, dass $\nabla_i f(\alpha) = 0$ für $0 < \alpha_i < U$, sowie $\nabla_i f(\alpha) \geq 0$ für $\alpha_i = 0$. Im Fall der L1-Soft-SVM folgt außerdem, dass $\nabla_i f(\alpha) \leq 0$ für $\alpha = U$ ist. Wir können mit $\alpha$ also einen KKT-Punkt konstruieren, der die KKT-Bedingungen erfüllt (vgl. Definition \ref{def:kkt}). Damit ist nach Satz \ref{dual-kkt} $\alpha$ eine Lösung für (\ref{equ:op-impl}).
+\end{proof}
+
+\begin{lemma}\label{lem:abstg-impl}
+	Das Quadrupel $(\mathbb{R}^l, G, f, \mathcal{F}')$ ist ein Abstiegsverfahren.
+\end{lemma}
+\begin{proof}
+Zunächst identifizieren wir $\mathbb{R}^l$ mit $X$, sowie $\mathcal{Z}$ mit $G=[0,U]^l$.
+Wegen Bemerkung	\ref{bem:duale-probleme} (a) ist das Problem (\ref{equ:op-impl}) lösbar. Wir können also $f$ mit $\Phi$ identifizieren. Wegen Bemerkung \ref{bem:impl-abstieg} und Lemma $\ref{lem:impl-abstieg}$ können wir weiter $\mathcal{F}'$ mit $\mathcal{F}$ identifizieren. Damit ist $(\mathbb{R}^l, G, f, \mathcal{F}')$ ein Abstiegsverfahren.
+\end{proof}
+
+Sei $\alpha^0$ zulässig für (\ref{equ:op-impl}). Für $k > 1$ setzen wir $\alpha^k := (\mathcal{F}')^k(\alpha^0)$. 
+
+\begin{satz}\label{satz:impl-grenz-opt}
+	Sei $\alpha^*$ eine Lösung für (\ref{equ:op-impl}), dann gilt $\lim_{k \rightarrow \infty} f(\alpha^k) = f(\alpha^*)$.
+\end{satz}
+\begin{proof}
+	Sei $c^* = f(\alpha^*)$ und $G$ die zulässige Menge das Problem (\ref{equ:op-impl}). 
+	Wir müssen zeigen, dass $N' := N(\varepsilon,f(\alpha)) := f^{-1}([c^*+\varepsilon, f(\alpha)]) \cap G$ für ein beliebig zulässiges $\alpha \in G$ kompakt ist. Dann folgt die Aussage mit Lemma \ref{lem:abstg-impl}, Bemerkung \ref{bem:impl-abstieg} und Satz \ref{satz-abstiegsverfahren-konv}. \\ 
+	
+	Zunächst ist nach Theorem 2.20 in \cite{ae-ana1} $N'$ als Urbild einer abgeschlossener Menge unter einer stetigen Funktion abgeschlossen. 
+	Für den L1-Soft-SVM folgt die Beschränktheit von $N'$ aus $N' \subset G = [0,C]^l$. Für den L2-Soft-SVM folgt die Beschränktheit von $N'$ aus der (echt) positiven Definitheit von $\hat{Q} = Q + CI$, mit der positiv semidefiniten Matrix $Q$ und der Einheitsmatrix $I \in \mathbb{R}^{l \times l}$. Damit ist nach dem Satz von Heine-Borel (vgl. \cite{ae-ana1}) $N'$ kompakt.
+\end{proof}
+
+
+\begin{definition} 
+Die durch 
+$$
+\nabla_i^P f(\alpha) = \left\{ 
+\begin{array}{ll}
+	\nabla_i f(\alpha)  		 &,\ 0 < \alpha_i < U \\
+	\min(0, \nabla_i f(\alpha))	 &,\ \alpha_i = 0 \\
+	\max(0, \nabla_i f(\alpha))  &,\ \alpha_i = U
+\end{array}
+\right.
+$$
+definierte Abbildung bezeichnen wir als \emph{projizierten Gradienten}. Weiter setzen wir  
+$$ 
+	w(\alpha) := \sum_{i=1}^{l} \alpha_i y^i x^i.
+$$.
+\end{definition}
+
+\begin{lemma}
+Sei $\alpha \in \mathcal{Z}$ und sei $1 \leq i \leq l$. Sei weiter $(w^*, \xi^*)$ die primale Lösung der $L_1$-Soft-SVM. Dann gilt für das Koordinatenabstiegsverfahren bezüglich der $L_1$-Soft-SVM:
+\begin{itemize}
+\item[(i)] $\lim_{k \rightarrow \infty} w(\alpha^k) = w^*$.
+\item[(ii)] $\lim_{k \rightarrow \infty} \nabla_j f(\alpha^k) = y^j (w^*)^t x^j -1$.
+\end{itemize}
+\end{lemma}
+\begin{proof}
+Zu (i): Angenommen die Aussage gilt nicht.  Dann existiert ein $\varepsilon > 0$, sowie für jedes $K \in \mathbb{N}$ ein $k \geq K$, dass $||w(\alpha^k)-w^*|| > \varepsilon$ gilt. Wir können also eine Teilfolge $\{\alpha^{k'}\} \subset \{\alpha^{k}\}$ konstruieren, dass  $||w(\alpha^{k'})-w^*|| > \varepsilon$ für alle $k'$ gilt. Wegen der Kompaktheit folgt, dass $\{\alpha^{k'}\}$ eine konvergente Teilfolge enthält. Sei $\alpha^*$ ein solcher beliebig gewählter Grenzwert. Aus der Stetigkeit von $w(\alpha)$ folgt, dass $||w(\alpha^*)-w^*||  \geq \varepsilon$ gilt. Da $G$ abgeschlossen ist, ist $\alpha^* \in G$. Also löst $\alpha^*$ das duale Problem. Dann ist nach Satz \ref{satz-svm-dual-probleme} aber $w(\alpha^*)$ eine primale Lösung. Im Widerspruch zur Konstruktion von $\{\alpha^{k'}\}$. Also muss (i) gelten. \\
+Zu (ii): Die Aussage folgt aus (i) sowie (\ref{equ:cd-nablaf}).
+\end{proof}
+
+Die gleichen Aussagen des vorherigen Satzes folgen für den L2-Soft-SVM bereits aus der strikten Konvexität der Zielfunktion, der damit einhergehenden eindeutigen Lösbarkeit von (\ref{equ:op-impl}) und Korollar \ref{satz-abstiegsverfahren-konv} (, wobei wir die anderen Voraussetzungen für Korollar \ref{satz-abstiegsverfahren-konv} bereits in Lemma (\ref{lem:abstg-impl}) und Satz (\ref{satz:impl-grenz-opt}) gezeigt haben).
+
+\begin{satz}
+	Sei $\alpha^*$ ein Minimum von $f$. Dann gelten die Aussagen:
+\begin{itemize}
+\item[(i)] Ist $\alpha^*_i = 0$ und $\nabla_i f(\alpha^*) > 0$, so existiert ein $k_i$, sodass für alle $k \geq k_i$ $\alpha^k = 0$ ist.
+\item[(ii)] Ist $\alpha^*_i = U_p$ und $\nabla_i f(\alpha^*) < 0$, so existiert ein $k_i$, sodass für alle $k \geq k_i$ $\alpha^k = U_p$ ist.
+\item[(iii)] Es gilt 
+\begin{equation}
+\label{equ:stop-cndt}
+	\lim_{k \rightarrow \infty} \max_{j} \nabla_j^P f(\alpha^k) = 
+	\lim_{k \rightarrow \infty} \min_{j} \nabla_j^P f(\alpha^k) = 0.
+\end{equation}
+\end{itemize}
+\end{satz}
+\begin{proof}
+	Zunächst definieren wir die Folge  $\{\beta^k\}$ mit
+	$$
+	\beta^k := (\mathcal{F}')^{k \; \bmod \; l} \circ \mathcal{K}^1 \circ \cdots \circ \mathcal{K}^k(\alpha^0).
+	$$
+	Können wir die Aussagen (i), (ii) und (iii) für die Folge $\{\beta^k\}$ zeigen, so folgen (i) und (ii) auch für $\alpha^k$. Um dies zu tun, werden wir Lemma 1 in \cite{hcl-ddms-08} verwenden. Wir müssen hierfür zeigen, dass die Voraussetzungen
+	\begin{itemize}
+		\item[1.] $\beta^{k+1}$ löst $\min_{d} f(\beta^k+ de_i) \quad \text{u.d.N.} \quad 0 \leq \beta^k_i + d \leq U$,
+		\item[2.] jeder Häufungspunkt von $\{\beta^k\}$ ist ein stationärer Punkt
+	\end{itemize}
+	für $i=1,...,l$ erfüllt sind. Die erste Aussage haben wir mit $\beta^{k+1} = \mathcal{K}^i(\beta^{k})$ bereits gezeigt. Sei $\beta^*$ nun ein Häufungspunkt von $\{\beta^k\}$. Da die Folge ${f(\beta^k)}$ monoton fällt und nach unten beschränkt ist, gilt 
+	$$
+	f(\beta^*) = \lim_{k \rightarrow \infty} f(\beta^k) = \lim_{k \rightarrow \infty} f(\alpha^k) = f(\alpha^*),
+	$$
+	wobei für die letzte Gleichheit Satz \ref{satz:impl-grenz-opt} verwendet haben und $\alpha^*$ die optimale Lösung für das Problem \ref{equ:op-impl} ist. Damit sind die Voraussetzungen erfüllt. 
+\end{proof}
+
+Definieren wir 
+\begin{equation}
+	\Delta(\alpha) := \max_{j} \nabla_j^P f(\alpha^k) - \min_{j} \nabla_j^P f(\alpha),
+\end{equation}
+so erhalten wir mit der Gleichung (\ref{equ:stop-cndt}) also ein Abbruchkritierum. 
+
+\section{Algorithmus}
+Da die Matrix $\hat{Q}$ schnell sehr groß werden kann, möchte man möglichst vermeiden, diese explizit anzugeben. Definieren wir $w = \sum_{j=1}^{l} y^j \alpha_j x^j$, so ist 
+\begin{equation}
+\label{equ:cd-nablaf}
+\nabla_i f(\alpha) = y^i w^t x^i -1 + D_{ii}.
+\end{equation}
+Es genügt also, $w$ zu berechnen und nach jedem Koordinatenabstieg zu aktualisieren.
+
+
+In Algorithmus \ref{alg:softsvm} werden alle Schritte für die Koordinatenabstiegsmethode dargelegt. In der inneren Schleife wird in Zeile 5 bis 11 $\nabla_i^pf$ berechnet (Gleichung \ref{equ:cd-nablaf}) und $PG \gets \nabla_i^pf$ gesetzt. Die Zeilen 13 bis 16 entsprechen damit einem Koordinatenabstieg in der $i$-ten Komponente (Gleichung \ref{equ:cd-step}). Die innere Schleife wird solange durchlaufen, bis $M-m < \epsilon$. Offenbar gilt im $k$-ten äußeren Schleifendurchlauf in Zeile 17 die Beziehung $\Delta(\alpha^k) = M-m$. Wegen (\ref{equ:stop-cndt}) terminiert also der Algorithmus.
+
+\begin{algorithm}[hbtp]
+\KwIn{Trainingsdaten $(x^1,y^l),...,(x^l,y^l),\ C,\ $ Fehlertoleranz $\epsilon$}
+\KwOut{$w$}
+\KwData{$\alpha$, $w= \sum_{i= 1}^l y^i \alpha^i x^i $}
+Initialisiere die Diagonaleinträge der Matrizen $Q,\ D$ geeignet für die beiden Fälle $p=1,2$.\;
+\While{True}{
+	$M \gets-\infty,m \gets \infty$\;
+	\ForEach{$i \in \{1,...,l\}$}{
+		$G \gets y^iw^tx^i -1 + D_{ii} \alpha_i\;$ \;
+		\If{$\alpha_i = 0$}{
+			$PG \gets \min(G,0)$ \;
+		}
+		\eIf{$\alpha_i = U$}{
+			$PG \gets \max(G,0)$ \;
+		}{
+			$PG \gets G$ \;
+		}
+		$M = \max(M,PG),\ m = \min(m,PG)$ \;
+		\If{$PG \neq 0$}{
+			$\bar{\alpha}_i \gets \alpha_i$ \;
+			$\alpha_i \gets \min(\max(\alpha_i-G/\bar{Q}_{ii}, 0),U)$\;
+			$w \gets w + (\alpha_i - \bar{\alpha}_i)y_i x_i$\;
+		}
+	}
+	\If{$M-m < \epsilon$}{
+		STOP
+	}
+}
+\caption{Soft-SVM-Implementierung mit der Koordinatenabstiegsmethode}
+\label{alg:softsvm}
+\end{algorithm}
+
+\section{Randomisierte Permutation des Koordinatenabstiegs}
+Nach \cite{hcl-ddms-08} kann der Algorithmus \ref{alg:softsvm} durch einen randomisierten Koordinatenabstieg der Iterierten in der inneren Schleife (Zeile 4) erheblich beschleunigt werden. Formal kann dies mit dem Einfügen der Zeile 
+$$
+	i \gets \pi_k(i)
+$$ 
+für eine zufällig gewählte Permutation $\pi_k \in S_l$ direkt nach den Foreach-Statement erreicht werden. In Experiment B konnte die Aussage empirisch bestätigen werden. 
+
+\section{One-vs-Rest-Strategie}\label{sec:ovr}
+Algorithmus \ref{alg:softsvm} lässt sich mit der One-vs-Rest-Strategie auf Multi-Klassen-Klassifizierungsprobleme erweitern (\cite{hsu-comp-02}): Seien hierfür $L= \{1,...,k\}$ die Klassen und $(\bar{x}^1,\bar{y}^1),...,(\bar{x}^l,\bar{y}^l)$ die Trainingsdaten mit $\bar{x}^i \in \mathbb{R}^n$ und $\bar{y}^i \in L$ für $i = 1,...,l$. Um einen MKK (Definition \ref{def:mlk}) zu erhalten, berechnen wir mit Hilfe von Algorithmus \ref{alg:softsvm} für jede Klasse $j \in L$ einen binären Klassifikator $h_{(w_j,0)}$, wobei wir für das $j$-te Subproblem den $i$-ten Trainingsdatensatz mit 
+$$(x^{i},y^{i}) \gets (\bar{x}^i, 2\delta(\bar{y}^i, j)-1) \in \mathbb{R}^n \times \{-1,1\}
+$$ 
+festlegen. Mit $\delta(i,j)$ meinen wir das Kronecker-Delta. Die Klassifikationsregel wird dann durch
+$$
+h: \mathbb{R}^n \rightarrow L, h(x) := \argmax_{j=1,...,l} (w_j^t x)
+$$ 
+definiert.
+
+\begin{algorithm}[hbtp]
+\KwIn{Trainingsdaten $(\bar{x}^1,\bar{y}^l),...,(\bar{x}^l,\bar{y}^l)$, $C_1,...,C_l$, Fehlertoleranz $\epsilon$}
+\KwOut{Klassifikator $h(x)$}
+\KwData{$w_j$}
+\ForEach{$j \in \{1,...,l\}$}{
+	$(x^{i},y^{i}) \gets (\bar{x}^i, 2\delta(\bar{y}^i, j)-1) \in \mathbb{R}^n \times \{-1,1\}$ für $i = 1,...l$\;
+	Berechne $w_j$ mit Hilfe von Algorithmus \ref{alg:softsvm} 
+		und den Parametern $(x^{1},y^{1}),...,(x^{l},y^{l}),\ C_j,\ \epsilon$\;
+}
+$h \gets \argmax_{j=1,...,l} \; w_j^t x$
+\caption{Soft-SVM für das Multiklassenproblem}
+\label{alg:mkk-softsvm}
+\end{algorithm}

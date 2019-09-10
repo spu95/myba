@@ -1,0 +1,190 @@
+
+\section{Abstiegsverfahren}
+Wir führen folgende Notationen und Definitionen ein:
+\begin{itemize}
+\item Seien $X$, $\mathcal{Z} \subset X$ Mengen.
+\item Sei $\Phi : X \rightarrow \mathbb{R}$ so, dass $\Phi$ eingeschränkt auf $\mathcal{Z}$ ein Minimum $c^* \in \mathbb{R}$ annimmt. Wir definieren $\mathcal{Z^*} := \Phi^{-1}(c^*)$. 
+
+\item Sei $\mathcal{F} : Z \rightarrow Z$ so, dass $\Phi(\mathcal{F}(x)) < \Phi(x)$ für alle $x \in \mathcal{Z} \setminus \mathcal{Z^*}$ und $\Phi(\mathcal{F}(x)) = \Phi(x)$ für alle $x \in \mathcal{Z}^*$. Wir nennen $\mathcal{F}$ Abstiegsfunktion, oder einfach Abstieg für $\mathcal{Z}$ und bezeichnen $\mathcal{F}(z)$ Abstieg an $z$ auf $\Phi$ über $\mathcal{F}$. Weiter setzen wir $\mathcal{F}^i := 
+\underbrace{\mathcal{F} \circ ... \circ \mathcal{F}}_{i \; \text{mal}}$, sowie $\mathcal{F}^* \Phi(x) := \lim_{i \rightarrow \infty}\Phi^(\mathcal{F}^i(x))$.
+
+\item Sei $N(\varepsilon, c) := \Phi^{-1}([ \; c^* + \varepsilon,\ c \; ]) \; \cap \; \mathcal{Z}$ beziehungsweise
+$
+N(\varepsilon) := N(\varepsilon, \infty) := 
+\bigcup\limits_{c \geq c^*+\varepsilon} N(\varepsilon,c) $  
+die $c$-Sublevelmenge zum Niveau $\varepsilon$.
+
+\item Sei 
+$
+M(\varepsilon,c) := 
+\sup_{x \in N(\varepsilon,c)} \; \frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x)-c^*}
+$
+beziehungsweise $M(\varepsilon) := M(\varepsilon, \infty)$
+der minimale Relativabstieg auf $N(\varepsilon,c)$ über $\mathcal{F}$.
+
+\item Das Quadrupel $(X ,\ \mathcal{Z} ,\ \Phi ,\ \mathcal{F})$ bezeichnen wir als Abstiegsverfahren.
+
+
+\end{itemize}
+
+\begin{bemerkung}
+\begin{itemize}
+\item[(a)] Für alle $\varepsilon > 0, \ c > c^* + \varepsilon$ beziehungsweise $c = \infty$ ist $M(\varepsilon, c)$ wohldefiniert und es gilt $0 \leq M \leq 1$.
+\item[(b)] $\mathcal{F}^* \Phi$ ist wohldefiniert und auf $\mathcal{Z}$ gilt $c^* \leq \mathcal{F}^* \Phi \leq \Phi$.
+\end{itemize}	
+\end{bemerkung}
+
+\begin{satz}
+	Sei $(X ,\mathcal{Z}, \Phi , \mathcal{F})$ ein Abstiegsverfahren. Sei weiter $M(\varepsilon) < 1$ für beliebiges $\varepsilon > 0$. Dann ist $\mathcal{F}^* \Phi = c^*$.
+\end{satz}
+\begin{proof}
+	Sei $x \in \mathcal{Z}^*$. Nach Definition von  von $\mathcal{F}$ ist dann $\mathcal{F}(x) = x$. Also ist $\mathcal{F}^* \Phi(x) = x$. 
+	
+	Sei nun $\varepsilon > 0$ und $x \in \mathcal{Z} \setminus \mathcal{Z}^*$. Sei weiter $x \in N(\varepsilon)$.
+	Dann ist nach Definition von $M(\varepsilon)$
+	$$
+	\frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x) - c^*} \leq M(\varepsilon) \Leftrightarrow
+	\Phi(\mathcal{F}(x)) - c^* \leq M(\Phi(x) - c^*).
+	$$
+	Für $i \geq 1$ und $\mathcal{F}^i(x) \in N(\varepsilon)$ folgt induktiv, dass
+	$$
+	\Phi(\mathcal{F}^i(x)) - c^* \leq M^i (\Phi(x) - c^*).
+	$$
+	Da nach Voraussetzung $M(\varepsilon) < 1$, muss nach Definition von $N(\varepsilon)$ ein $j \in \mathbb{N}$ existieren, dass $\mathcal{F}^j(x) \in \mathcal{Z} \setminus N(\varepsilon)$.
+	
+	Sei nun $j \geq 0$ so, dass $\mathcal{F}^j(x) \in \mathcal{Z} \setminus N(\varepsilon)$. Dann ist nach Definition von $N(\varepsilon)$, $\mathcal{F}$ und Bemerkung 2.1 (b)  $c^* \leq \mathcal{F}^* \Phi(x) \leq \Phi(\mathcal{F}^j(x)) \le c^* + \varepsilon$. 
+	
+	Da $\varepsilon$ und $x$ beliebig waren, folgt schließlich $\mathcal{F}^*\Phi = c^*$.
+\end{proof}
+
+\begin{korollar}
+	\label{satz-abstiegsverfahren-konv}
+	Seien $(X, \mathcal{Z}, \Phi, \mathcal{F})$ ein Abstiegsverfahren, $(X,d)$ ein metrischer Raum, sowie $(Z,d)$ ein durch selbigem $d$ induzierter metrischer Raum. Seien $\Phi$ und $\Phi \circ \mathcal{F}$ stetig (bezüglich $d$). Weiter sei für jedes $\varepsilon > 0$ sowie jedes $z \in \mathcal{Z}$ die Menge $N(\varepsilon, \Phi(z))$ (bezüglich $d$) kompakt. Dann ist $\mathcal{F}^* \Phi = c^*$. Ist zusätzlich das Minimum eindeutig durch $z^*$ bestimmt und $Z$ abgeschlossen, so ist $\lim_{i \rightarrow \infty} \mathcal{F}^i(z) = z^*$ für alle $z \in \mathcal{Z}$.
+\end{korollar}
+\begin{proof}
+	Seien $\varepsilon > 0,\ z \in \mathcal{Z}$ beliebig. Die Funktion 
+	$$	
+	\frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x) - c^*}
+	$$ ist stetig und nimmt wegen der Kompaktheit von $N(\varepsilon, \Phi(z))$ ihr Maximum an. Daher ist
+	$$
+	M(\varepsilon, \Phi(z)) := 
+	\sup_{z \in N(\varepsilon, \Phi(z))} \frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x) - c^*} = 
+	\max_{z \in N(\varepsilon, \Phi(z))} \frac{\Phi(\mathcal{F}(x)) - c^*}{\Phi(x) - c^*}
+	< 1.
+	$$
+	Nach dem vorherigen Satz [angewendet auf 
+	$(X, \{ \Phi \leq \Phi(z) \}, \Phi, \mathcal{F})$] 
+	ist $\mathcal{F}^* \Phi = c^*$ auf $\{ \Phi \leq \Phi(z) \}$. Insbesondere ist $\Phi(z) = c^*$. 
+	
+	Sei nun das Minimum eindeutig durch $z^*$ bestimmt und $\mathcal{Z}$ abgeschlossen, $U_{z^*}$ eine beliebige offene Umgebung um $z^*$. Dann ist $N := \mathcal{Z} \setminus U_{z^*}$ abgeschlossen. Da $z^*$ das einzige Minimum ist, muss $\inf \Phi(N) = \min \Phi(N) > c^*$ gelten. Also ist $\mathcal{F}^i(z) \in U_{z^*}$ für fast alle $i \in \mathbb{N}$. Da $U_{z^*}$ eine beliebige Umgebung war, folgt schließlich $\lim_{i \rightarrow \infty} \mathcal{F}^i(z) = z^*$.
+\end{proof}
+
+
+\section{Koordinatenabstiegsmethode}
+Wir wollen nun  die Koordinatenabstiegsmethode (Coordinate-Decent-Method) einführen. Hierfür treffen wir folgende Annahmen:
+Sei $X = \mathbb{R}^n$, $\mathcal{Z} = [L,U]$ mit $L \in [-\infty, \infty)^n$ und $U \in (-\infty, \infty]^n$. Sei  $\ \Phi \in C^2(\mathbb{R}^n)$ stetig, konvex und in jeder Komponente strikt konvex (aber selbst nicht unbedingt strikt konvex). Die Sublevelmenge $\{ \Phi \leq c \} \cap \mathcal{Z}$ sei für jedes $c \in \mathbb{R}^n$ kompakt. 
+
+\begin{definition}
+	Für $1 \leq i,j \leq n$ sei
+	$$
+	\mathcal{A}^i_j : \mathcal{Z} \rightarrow \mathbb{R}, \ \mathcal{A}^i_j(z) := 
+	\begin{cases} 
+		z_j ,\ i \neq j  \\ 
+		\argmin_{\tilde{z_i} \in \mathbb{R}} \
+		& \Phi(z_1,...,\tilde{z}_i,...,z_n) \\
+		& \text{u.d.N.} \; (z_1,...,\tilde{z}_i,...,z_n) \in \mathcal{Z} 
+	\end{cases}.
+	$$
+	Wir definieren mit
+	$$
+	\mathcal{A}^i(z) = (\mathcal{A}^i_1,...,\mathcal{A}^i_n) \in \mathbb{R}^n
+	$$
+	den Koordinatenabstieg in $i$-ter Komponente.
+\end{definition}
+
+\begin{bemerkung}
+Der Koordinatenabstieg $\mathcal{A}^i$ ist wohldefiniert und eine Selbstabbildung. Wir setzen $\mathcal{A}^i : \mathcal{Z} \rightarrow \mathcal{Z}$.
+\end{bemerkung}
+
+Es sei für die nächsten beiden Lemmata $1\leq i \leq n$ beliebig.
+
+\begin{lemma}
+	Der Ausdruck $\Phi \circ \mathcal{A}^i: \mathcal{Z} \rightarrow \mathbb{R}$ ist stetig.
+\end{lemma}
+\begin{proof}
+	O.b.d.A. dürfen wir $i = n$ annehmen. Weiter ergibt sich aus der Definition von $\mathcal{A}^n$, dass $\mathcal{A}^n$ in ihren ersten $n-1$ Komponenten als Identität wirkt. Daraus ergibt sich $$
+	\begin{aligned}	
+		&\Phi \circ \mathcal{A}^n(z) = \Phi(z_1,...,z_{n-1},\mathcal{A}^n_n(z)) = \\
+		&= \Phi(z_1,...,\argmin_{\tilde{z_n} \in \mathbb{R}} \
+		 \Phi(z_1,...,z_{n-1},\tilde{z_n})) \
+		 \text{u.d.N.} \;  (z_1,...,z_{n-1},\tilde{z}_n) \in \mathcal{Z} = \\
+		&= \min_{\tilde{z_n} \in \mathbb{R} } \Phi(z_1,...,z_{n-1},\tilde{z}_n) \
+		\text{u.d.N.} \;  (z_1,...,z_{n-1},\tilde{z}_n) \in \mathcal{Z}
+ 	\end{aligned}.
+	$$ 
+	Fassen wir die ersten $n-1$ Komponenten mit $y := z_1,...,z_{n-1}$ zusammen, so lässt sich der Ausdruck zu 
+	\begin{equation}
+	\label{cd-schritt-a1}
+	\Phi \circ \mathcal{A}^n(z) = \Phi \circ \mathcal{A}^n(y,z_n) = 
+	\min_{\tilde{z_n} \in \mathbb{R} } \Phi(y,\tilde{z}_n) \
+	\text{u.d.N.} \;  (y,\tilde{z}_n) \in \mathcal{Z}
+	\end{equation}
+	vereinfachen. 
+	Sei nun $\varepsilon > 0$ und $z \in \mathcal{Z}$.
+	Wir dürfen  gleichmäßige Stetigkeit von $\Phi$ auf $N := N(\varepsilon,\Phi(z)+1)$ fordern. Dann existiert ein $\delta > 0$, dass $|\Phi(z_1)-\Phi(z_2)| < \varepsilon$ für $\|z_1-z_2\| < \delta$ und $z_1,z_2 \in N$. Sei $U_z = \{\tilde{z} \ | \ \|\tilde{z}-z\| < \delta \} \cap N$, sowie $\tilde{z} := (\tilde{y},\tilde{z}_n) \in U_z$ eine offene Umgebung von $z$ bezüglich $\mathcal{Z}$.
+	Dann ist 
+	$$
+	\Phi \circ \mathcal{A}^n(\tilde{z}) = \Phi \circ \mathcal{A}^n (\tilde{y},\tilde{z}_n) = 
+	\Phi(\tilde{y},\tilde{z}^*_n) \geq \Phi(y,\tilde{z}^*_n) - \varepsilon \geq \Phi(y,z^*_n) - \varepsilon = \Phi \circ \mathcal{A}^n(z) - \varepsilon,
+	$$
+	wobei die erste Ungleichung aus der gleichmäßigen Stetigkeit und die zweite Ungleichung aus der Minimalität von $z^*_n$ folgt. Aus der gleichmäßigen Stetigkeit, sowie Symmetrie folgt schließlich 
+	$\Phi \circ \mathcal{A}^n(z) \geq \Phi \circ \mathcal{A}^n(\tilde{z}) - \varepsilon$. Zusammen ergibt dies $\Phi \circ \mathcal{A}^n(\tilde{z}) \geq \Phi \circ \mathcal{A}^n(z) - \varepsilon \geq \Phi \circ \mathcal{A}^n(\tilde{z}) - 2\varepsilon$ beziehungsweise $\Phi \circ \mathcal{A}^n(\tilde{z}) + \varepsilon \geq \Phi \circ \mathcal{A}^n(z) \geq \Phi \circ \mathcal{A}^n(\tilde{z}) - \varepsilon$. Hieraus ergibt sich unmittelbar die Stetigkeit in $z$. Da $z \in \mathcal{Z}$ beliebig war, ist das Lemma gezeigt.
+\end{proof}
+
+\begin{korollar}
+	\label{satz-cd-stetig}
+  	Der Ausdruck $\mathcal{A}^i$ ist in $\mathcal{Z}$ stetig.
+\end{korollar}
+\begin{proof}
+	Die Behauptung folgt unmittelbar aus der gleichmäßigen Stetigkeit von $\Phi \circ \mathcal{A}^i$ auf $N := N(\varepsilon,\Phi(z)+1)$ für beliebiges $z \in \mathcal{Z}$, der Äquivalenz von Stetigkeit und Folgenstetigkeit, der Abgeschlossenheit von $\mathcal{Z}$ (siehe etwa das Argument bezüglich der Eindeutigkeit vom Satz \ref{satz-abstiegsverfahren-konv}), sowie der Eindeutigkeit des Problems
+	$$
+	\argmin_{\tilde{z_i} \in \mathbb{R}} \
+	\Phi(z_1,...,\tilde{z}_i,...,z_n) \
+	\text{u.d.N.} \;  (z_1,...,\tilde{z}_i,...,z_n) \in \mathcal{Z}
+	$$
+	für $z \in \mathcal{Z}$.
+\end{proof}
+
+\begin{definition}
+	Wir definieren mit $\mathcal{F}' := \mathcal{A}^1 \circ ... \circ \mathcal{A}^n$ den zu $\Phi$ und $\mathcal{Z}$ korrespondierenden Koordinatenabstieg.
+\end{definition}
+
+\begin{lemma}
+	\label{lemma-cd-kkt}
+	Ist $\mathcal{F}'(z) = z$, so ist $z$ ein globales Minimum.
+\end{lemma}
+\begin{proof}
+	Wir definieren mit $$
+	L(z,\nu,\rho) := \Phi(z) + \sum_{i=1}^{n}\nu_i (L_i-z_i) + \sum_{i=1}^{n}\rho_i (z_i-U_i)
+	$$
+	die zu $\Phi$ und $\mathcal{Z}$ gehörige Lagrange-Funktion. Die KKT-Bedingungen ergeben sich damit zu
+	\begin{equation}
+	\label{equ-cds-kkt}
+	\begin{aligned}
+	\nabla \Phi(z) - \nu + \rho = 0 \\
+	\nu \geq 0 ,\ \rho \geq 0 ,\ \nu^t(L-z) = 0 ,\ \rho^t(z-U) = 0.
+	\end{aligned}
+	\end{equation}
+	
+	Es sei $z \in \mathcal{Z}$ und $\mathcal{F}'(z) = z$. Aus der Minimalität, sowie den KKT-Bedingungen bezüglich jeder einzelnen Komponente haben wir mit 
+	$\nu = [\nabla \Phi(z)]^+ ,\ \rho = [\nabla \Phi(z)]^-$ einen KKT-Punkt $(z,\nu,\rho)$ bezüglich des Problems (\ref{equ-cds-kkt}), wobei mit $[\nabla \Phi(z)]^+$ der Positiv- und mit $[\nabla \Phi(z)]^-$ der Negativ-Anteil von $\nabla \Phi(z)$ gemeint ist. Nach Satz \ref{dual-kkt} ist $z$ ein globales Minimum.
+	
+\end{proof}
+
+\begin{korollar}
+	\label{korollar-cd-convergency}
+	$\mathcal{F}'$ ist ein Abstieg für $\mathcal{Z}$, $(X,\mathcal{Z}, \Phi, \mathcal{F}')$ ist ein Abstiegsverfahren. Weiter ist $\mathcal{F}'^*\Phi(z) = c^*$, Ist $\Phi$ strikt konvex, gilt zusätzlich $\lim_{i \rightarrow \infty} (\mathcal{F}')^i(z) = z^*$.
+\end{korollar}
+\begin{proof}
+	Aus Lemma \ref{lemma-cd-kkt} und der Definition von $\mathcal{F}'$ ergibt sich, dass $\mathcal{F}'$ eine Abstiegsfunktion ist. Damit ist nach Voraussetzung $\mathcal{Z}$, $(X,\mathcal{Z}, \Phi, \mathcal{F}')$ ein Abstiegsverfahren. Aus Satz \ref{satz-cd-stetig}, der Kompaktheit von $\{ \Phi \leq c \}$ für alle $c \in \mathbb{R}^n$, sowie gegebenenfalls der strikten Konvexität von $\Phi$ ergeben sich mit Korollar \ref{satz-abstiegsverfahren-konv} die letzten beiden Aussagen.
+\end{proof}
